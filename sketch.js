@@ -1,17 +1,45 @@
+let pelotas = [];
+const NP = 100;
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  noLoop();
+  for (let i = 0; i < NP; i++) {
+    let pelota = new Pelota(); 
+    pelotas.push(pelota);
+  }
 }
 
 function draw() {
-  noStroke();
-  let gapX = mouseX;
-  let gapY = mouseY;
- let anchura = 20; 
-
-  for (let x = 10; x < windowWidth; x += anchura + gapX) {
-    for (let y = 10; y < windowHeight; y += anchura + gapY) {
-      square(x, y, anchura);
-    }
+  background(163, 99, 252);
+  for (let i = 0; i < NP; i++) {
+    pelotas[i].update(windowHeight);
+    pelotas[i].display();
   }
 }
+
+class Pelota {
+  constructor() {
+    this.x = random(width);
+    this.y = random(height * 0.2, height * 0.9);
+    this.diametro = random(10, 50);
+    this.velocidadY = random(1, 5);
+    this.gravedad = random(0.2, 1);
+  }
+
+  update(piso) {
+    this.velocidadY += this.gravedad;
+    this.y += this.velocidadY;
+
+    if (this.y >= piso - this.diametro / 2) {
+      this.velocidadY *= -1;
+      this.y = piso - this.diametro / 2;
+    }
+  }
+
+  display() {
+    fill(255);
+    noStroke();
+    circle(this.x, this.y, this.diametro);
+  }
+}
+
