@@ -1,10 +1,10 @@
-let pelotas = [];
+let pelotas = []; 
 const NP = 100;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   for (let i = 0; i < NP; i++) {
-    let pelota = new Pelota(); 
+    let pelota = new Pelota();
     pelotas.push(pelota);
   }
 }
@@ -42,4 +42,5 @@ class Pelota {
     circle(this.x, this.y, this.diametro);
   }
 }
+
 
