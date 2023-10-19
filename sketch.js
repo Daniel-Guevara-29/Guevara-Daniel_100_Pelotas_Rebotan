@@ -10,10 +10,10 @@ const numPelotas = 100;
 
 function crearPelotas() {
   for (let i = 0; i < numPelotas; i++) {
-    let x = random(width); // Posición inicial en X
-    let y = random(height); // Posición inicial en Y
-    let diametro = random(20, 40); // Tamaño de la pelota
-    let velocidad = random(1, 4); // Velocidad de la pelota
+    let x = random(width); 
+    let y = random(height); 
+    let diametro = random(20, 40); 
+    let velocidad = random(1, 4); 
 
     
     pelotas.push(new Pelota(x, y, diametro, velocidad));
