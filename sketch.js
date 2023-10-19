@@ -1,46 +1,65 @@
-let pelotas = []; 
-const NP = 100;
-
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  for (let i = 0; i < NP; i++) {
-    let pelota = new Pelota();
-    pelotas.push(pelota);
+ createCanvas(windowWidth, windowHeight); 
+  noStroke(); // Sin contorno en las pelotas
+}
+let pelotas = [];
+
+
+const numPelotas = 100;
+
+
+function crearPelotas() {
+  for (let i = 0; i < numPelotas; i++) {
+    let x = random(width); // Posición inicial en X
+    let y = random(height); // Posición inicial en Y
+    let diametro = random(20, 40); // Tamaño de la pelota
+    let velocidad = random(1, 4); // Velocidad de la pelota
+
+    
+    pelotas.push(new Pelota(x, y, diametro, velocidad));
   }
 }
 
 function draw() {
-  background(163, 99, 252);
-  for (let i = 0; i < NP; i++) {
-    pelotas[i].update(windowHeight);
-    pelotas[i].display();
+  background(220); 
+
+  
+  if (pelotas.length === 0) {
+    crearPelotas();
+  }
+
+  
+  for (let pelota of pelotas) {
+    pelota.mostrar();
+    pelota.mover();
+    pelota.rebotar();
   }
 }
+
 
 class Pelota {
-  constructor() {
-    this.x = random(width);
-    this.y = random(height * 0.2, height * 0.9);
-    this.diametro = random(10, 50);
-    this.velocidadY = random(1, 5);
-    this.gravedad = random(0.2, 1);
+  constructor(x, y, diametro, velocidad) {
+    this.x = x;
+    this.y = y;
+    this.diametro = diametro;
+    this.velocidad = velocidad;
+    this.ySpeed = 0;
   }
 
-  update(piso) {
-    this.velocidadY += this.gravedad;
-    this.y += this.velocidadY;
+  mostrar() {
+    fill(random(255), random(255), random(255)); 
+    ellipse(this.x, this.y, this.diametro);
+  }
 
-    if (this.y >= piso - this.diametro / 2) {
-      this.velocidadY *= -1;
-      this.y = piso - this.diametro / 2;
+  mover() {
+    this.y += this.ySpeed;
+    this.ySpeed += 0.2; 
+  }
+
+  rebotar() {
+    if (this.y > height - this.diametro / 2) {
+      this.y = height - this.diametro / 2;
+      this.ySpeed *= -0.8; 
     }
   }
-
-  display() {
-    fill(255);
-    noStroke();
-    circle(this.x, this.y, this.diametro);
-  }
 }
-
-
